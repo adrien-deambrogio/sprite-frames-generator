@@ -3,14 +3,14 @@ extends RefCounted
 
 
 ## Generates or appends an animation to a SpriteFrames resource by slicing a Texture2D by column and row counts.
-## [param start_frame] and [param end_frame] are 0-indexed and inclusive.
+## If [param start_frame] or [param end_frame] are omitted (-1), all frames in the sheet are used.
 static func from_grid(
 	texture: Texture2D,
 	h_frames: int,
 	v_frames: int,
-	anim_name: StringName,
-	start_frame: int,
-	end_frame: int,
+	anim_name: StringName = &"default",
+	start_frame: int = -1,
+	end_frame: int = -1,
 	sprite_frames: SpriteFrames = null,
 	fps: float = 10.0,
 	loop: bool = true
@@ -25,14 +25,14 @@ static func from_grid(
 
 
 ## Generates or appends an animation to a SpriteFrames resource by slicing a Texture2D using fixed pixel dimensions.
-## [param start_frame] and [param end_frame] are 0-indexed and inclusive.
+## If [param start_frame] or [param end_frame] are omitted (-1), all frames in the sheet are used.
 static func from_pixel_size(
 	texture: Texture2D,
 	frame_width: int,
 	frame_height: int,
-	anim_name: StringName,
-	start_frame: int,
-	end_frame: int,
+	anim_name: StringName = &"default",
+	start_frame: int = -1,
+	end_frame: int = -1,
 	sprite_frames: SpriteFrames = null,
 	fps: float = 10.0,
 	loop: bool = true
@@ -67,7 +67,7 @@ static func _build_animation(
 ) -> SpriteFrames:
 	if sprite_frames == null:
 		sprite_frames = SpriteFrames.new()
-		if sprite_frames.has_animation(&"default"):
+		if anim_name != &"default" and sprite_frames.has_animation(&"default"):
 			sprite_frames.remove_animation(&"default")
 
 	var total_frames := h_frames * v_frames
@@ -75,8 +75,11 @@ static func _build_animation(
 		push_error("Total frames is 0. Check texture and grid/frame dimensions.")
 		return sprite_frames
 
-	var start_idx := clampi(start_frame, 0, total_frames - 1)
-	var end_idx := clampi(end_frame, 0, total_frames - 1)
+	var raw_start := 0 if start_frame < 0 else start_frame
+	var raw_end := (total_frames - 1) if end_frame < 0 else end_frame
+
+	var start_idx := clampi(raw_start, 0, total_frames - 1)
+	var end_idx := clampi(raw_end, 0, total_frames - 1)
 
 	if not sprite_frames.has_animation(anim_name):
 		sprite_frames.add_animation(anim_name)
