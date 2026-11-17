@@ -43,6 +43,11 @@ static func from_pixel_size(
 	var tex_size := texture.get_size()
 	var h_frames := int(tex_size.x) / frame_width
 	var v_frames := int(tex_size.y) / frame_height
+
+	if h_frames <= 0 or v_frames <= 0:
+		push_error("Frame size (%dx%d) is larger than texture size (%dx%d)." % [frame_width, frame_height, int(tex_size.x), int(tex_size.y)])
+		return sprite_frames if sprite_frames != null else SpriteFrames.new()
+
 	var frame_size := Vector2(frame_width, frame_height)
 
 	return _build_animation(texture, h_frames, v_frames, frame_size, anim_name, start_frame, end_frame, sprite_frames, fps, loop)
@@ -66,6 +71,10 @@ static func _build_animation(
 			sprite_frames.remove_animation(&"default")
 
 	var total_frames := h_frames * v_frames
+	if total_frames <= 0:
+		push_error("Total frames is 0. Check texture and grid/frame dimensions.")
+		return sprite_frames
+
 	var start_idx := clampi(start_frame, 0, total_frames - 1)
 	var end_idx := clampi(end_frame, 0, total_frames - 1)
 

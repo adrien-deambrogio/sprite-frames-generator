@@ -1,0 +1,53 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://icon.svg" id="1_7uovi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cxk2d"]
+atlas = ExtResource("1_7uovi")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7ljvl"]
+atlas = ExtResource("1_7uovi")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_haehs"]
+atlas = ExtResource("1_7uovi")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_24du7"]
+atlas = ExtResource("1_7uovi")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rnalg"]
+atlas = ExtResource("1_7uovi")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4yxta"]
+atlas = ExtResource("1_7uovi")
+region = Rect2(96, 0, 16, 16)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cxk2d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7ljvl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_haehs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_24du7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rnalg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4yxta")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 10.0
+}]
